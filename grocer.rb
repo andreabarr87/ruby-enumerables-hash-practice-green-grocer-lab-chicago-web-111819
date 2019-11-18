@@ -19,16 +19,14 @@ def apply_coupons(cart, coupon)
   hash_after_coupons = {}
   cart.each do |item_name|
     name = item_name[0]
-    #binding.pry
     if (coupon[0][:item] == name) && (cart[name][:count] >= coupon[0][:num])
-      
       unit_price = coupon[0][:cost] / coupon[0][:num]
       quant_discounted = cart[name][:count] / coupon[0][:num]
       new_price = unit_price * quant_discounted
-      hash_after_coupons["#{name.upcase} W/ COUPON"] = {:price => new_price, :clearance => "true", :count => quant_discounted}}
-      name[:count] = name[:count] - quant_discounted
+      hash_after_coupons["#{name.upcase} W/COUPON"] = {:price => new_price, :clearance => true, :count => quant_discounted}
+      cart[name][:count] = cart[name][:count] - quant_discounted
     else
-      hash_after_coupons[] cart[0][{}]
+      hash_after_coupons["#{name.upcase}"] = {:price => cart[name][:price], :clearance => false, :count => cart[name][:count]}
     end
   end
   hash_after_coupons
